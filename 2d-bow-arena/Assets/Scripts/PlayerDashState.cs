@@ -1,22 +1,5 @@
 using UnityEngine;
 
-public enum DASH_TYPE
-{
-    OTHERS,
-
-    // Ready for superdash
-    PRE_SUPERDASH_OK,
-
-    // Ready for hyperdash
-    PRE_HYPERDASH_OK,
-
-    // wave dash check 1
-    PRE_WAVEDASH_1,
-
-    // Ready for wavedash
-    PRE_WAVEDASH_OK,
-}
-
 public class PlayerDashState : MonoBehaviour
 {
     private Rigidbody2D playerRigidbody;
@@ -32,8 +15,6 @@ public class PlayerDashState : MonoBehaviour
 
     public int totalTickCountForDash;
     public float positonAddPerTick;
-
-    public DASH_TYPE currentDashType;
 
     void Start()
     {
@@ -52,10 +33,6 @@ public class PlayerDashState : MonoBehaviour
 
                 if (effectiveDirection.x != 0 && effectiveDirection.y != 0)
                 {
-                    if (currentDashType == DASH_TYPE.PRE_WAVEDASH_1)
-                    {
-                        currentDashType = DASH_TYPE.PRE_WAVEDASH_OK;
-                    }
                     if (effectiveDirection.y > 0)
                     {
                         // upward
@@ -70,11 +47,6 @@ public class PlayerDashState : MonoBehaviour
             case ObservedState.GROUND:
                 if (effectiveDirection.x != 0 && effectiveDirection.y < 0)
                 {
-                    if (currentDashType == DASH_TYPE.PRE_WAVEDASH_1)
-                    {
-                        currentDashType = DASH_TYPE.PRE_WAVEDASH_OK;
-                    }
-
                     if (effectiveDirection.x > 0)
                     {
                         // upward
@@ -103,39 +75,6 @@ public class PlayerDashState : MonoBehaviour
         return directionVector;
     }
 
-    public void handleJumpActivation()
-    {
-        switch (currentDashType)
-        {
-            case DASH_TYPE.PRE_HYPERDASH_OK:
-                if (playerState.playerObserver.observedState == ObservedState.GROUND)
-                {
-                    playerState.changeState(PlayerPossibleState.HYPER_DASH_JUMP);
-                }
-                break;
-            case DASH_TYPE.PRE_WAVEDASH_OK:
-                if (
-                    playerState.playerObserver.observedState == ObservedState.GROUND
-                    || playerState.playerObserver.observedState == ObservedState.NEAR_LEFT_WALL
-                    || playerState.playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL
-                )
-                {
-                    playerState.changeState(PlayerPossibleState.WAVE_DASH_JUMP);
-                }
-                break;
-            case DASH_TYPE.PRE_SUPERDASH_OK:
-                if (
-                    playerState.playerObserver.observedState == ObservedState.GROUND
-                    || playerState.playerObserver.observedState == ObservedState.NEAR_LEFT_WALL
-                    || playerState.playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL
-                )
-                {
-                    playerState.changeState(PlayerPossibleState.SUPER_DASH_JUMP);
-                }
-                break;
-        }
-    }
-
     private void FixedUpdate()
     {
         if (!isStateActive)
@@ -152,7 +91,7 @@ public class PlayerDashState : MonoBehaviour
         currentTickCount++;
         if (currentTickCount > totalTickCountForDash)
         {
-            playerState.changeState(PlayerPossibleState.DASHING_AFTER);
+            playerState.changeState(PlayerPossibleState.NONE);
         }
     }
 
@@ -176,26 +115,5 @@ public class PlayerDashState : MonoBehaviour
         playerRigidbody.gravityScale = 0;
 
         playerRigidbody.velocity = Vector2.zero;
-
-        if (currentDirection.x == 0 || currentDirection.y == 0)
-        {
-            currentDashType = DASH_TYPE.PRE_SUPERDASH_OK;
-        }
-        else if (
-            playerState.playerObserver.observedState == ObservedState.GROUND
-            && currentDirection.x != 0
-            && currentDirection.y < 0
-        )
-        {
-            currentDashType = DASH_TYPE.PRE_HYPERDASH_OK;
-        }
-        else if (currentDirection.x != 0 && currentDirection.y != 0)
-        {
-            currentDashType = DASH_TYPE.PRE_WAVEDASH_1;
-        }
-        else
-        {
-            currentDashType = DASH_TYPE.OTHERS;
-        }
     }
 }

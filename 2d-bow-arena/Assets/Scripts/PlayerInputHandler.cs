@@ -25,33 +25,32 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnJumpAction(InputAction.CallbackContext context)
     {
-        bool isButtonDown = context.ReadValueAsButton();
-
-        if (isButtonDown)
-        {
-            Singelton.GetPlayer().playerstate.handleJumpAction();
-        }
-        else
-        {
-            Singelton.GetPlayer().playerstate.handleJumpActionEnd();
-        }
+        // bool isButtonDown = context.ReadValueAsButton();
+        // if (isButtonDown)
+        // {
+        //     Singelton.GetPlayer().playerstate.handleJumpAction();
+        // }
+        // else
+        // {
+        //     Singelton.GetPlayer().playerstate.handleJumpActionEnd();
+        // }
     }
 
     public void OnDashAction(InputAction.CallbackContext context)
     {
-        Singelton.GetPlayer().playerstate.handleDashAction();
+        // Singelton.GetPlayer().playerstate.handleDashAction();
     }
 
     public void OnMovementActionPerformed(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
 
-        Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        // Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 
     public void OnMovementActionCanceled(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-        Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        // Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 }

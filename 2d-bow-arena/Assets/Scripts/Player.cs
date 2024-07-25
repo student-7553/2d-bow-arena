@@ -6,15 +6,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        if (!!Singelton.GetPlayer())
-        {
-            Destroy(this);
-            return;
-        }
-        Singelton.SetPlayer(this);
+        Singelton.AddPlayer(this);
     }
 
-    public void handleRestart()
+    public void handleRespawn()
     {
         Debug.Log("Handle restart.......");
     }

@@ -8,21 +8,9 @@ public enum PlayerPossibleState
     GROUND,
     FALLING,
     DASHING,
-    DASHING_AFTER,
-    WAVE_DASH_JUMP,
-    SUPER_DASH_JUMP,
-    HYPER_DASH_JUMP,
     JUMPING,
     SLIDING,
     SLIDE_JUMPING
-}
-
-public enum PlayerStateSource
-{
-    GROUND_OBSERVER,
-    DASH_STATE,
-    JUMP_STATE,
-    INPUT,
 }
 
 public class PlayerState : MonoBehaviour
@@ -39,10 +27,6 @@ public class PlayerState : MonoBehaviour
     private PlayerDashState playerDashState;
     private PlayerSlideState playerSlideState;
     private PlayerSlideJumpState playerSlideJumpState;
-    private PlayerDashAfterState playerDashAfterState;
-    private PlayerWaveJumpState playerWaveJumpState;
-    private PlayerSuperJumpState playerSuperJumpState;
-    private PlayerHyperJumpState playerHyperJumpState;
 
     // -------------------------------------------------
 
@@ -56,10 +40,6 @@ public class PlayerState : MonoBehaviour
         playerDashState = GetComponent<PlayerDashState>();
         playerSlideState = GetComponent<PlayerSlideState>();
         playerSlideJumpState = GetComponent<PlayerSlideJumpState>();
-        playerDashAfterState = GetComponent<PlayerDashAfterState>();
-        playerWaveJumpState = GetComponent<PlayerWaveJumpState>();
-        playerSuperJumpState = GetComponent<PlayerSuperJumpState>();
-        playerHyperJumpState = GetComponent<PlayerHyperJumpState>();
 
         currentState = PlayerPossibleState.GROUND;
     }
@@ -83,12 +63,6 @@ public class PlayerState : MonoBehaviour
                     return;
                 }
                 changeState(PlayerPossibleState.SLIDE_JUMPING);
-                break;
-            case PlayerPossibleState.DASHING:
-                playerDashState.handleJumpActivation();
-                break;
-            case PlayerPossibleState.DASHING_AFTER:
-                playerDashAfterState.handleJumpActivation();
                 break;
         }
     }
@@ -141,28 +115,12 @@ public class PlayerState : MonoBehaviour
                 playerMovementHandler.handleUnDisableMovement();
                 playerDashState.stateEnd();
                 break;
-            case PlayerPossibleState.WAVE_DASH_JUMP:
-                playerMovementHandler.handleUnDisableMovement();
-                playerWaveJumpState.stateEnd();
-                break;
-            case PlayerPossibleState.SUPER_DASH_JUMP:
-                playerMovementHandler.handleUnDisableMovement();
-                playerSuperJumpState.stateEnd();
-                break;
-            case PlayerPossibleState.HYPER_DASH_JUMP:
-                playerMovementHandler.handleUnDisableMovement();
-                playerHyperJumpState.stateEnd();
-                break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateEnd();
                 break;
             case PlayerPossibleState.SLIDE_JUMPING:
                 playerMovementHandler.handleUnDisableMovement();
                 playerSlideJumpState.stateEnd();
-                break;
-            case PlayerPossibleState.DASHING_AFTER:
-                playerMovementHandler.handleUnDisableMovement();
-                playerDashAfterState.stateEnd();
                 break;
         }
 
@@ -192,32 +150,8 @@ public class PlayerState : MonoBehaviour
 
                 playerDashState.stateStart(dashDirection);
                 break;
-            case PlayerPossibleState.WAVE_DASH_JUMP:
-                playerMovementHandler.handleDisableMovement();
-                playerWaveJumpState.stateStart(
-                    playerMovementHandler.direction,
-                    playerDashState.cachedVelocity
-                );
-                break;
-            case PlayerPossibleState.DASHING_AFTER:
-                playerDashAfterState.stateStart(playerDashState.currentDashType);
-                break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateStart();
-                break;
-            case PlayerPossibleState.SUPER_DASH_JUMP:
-                playerMovementHandler.handleDisableMovement();
-                playerSuperJumpState.stateStart(
-                    playerMovementHandler.direction,
-                    playerDashState.cachedVelocity
-                );
-                break;
-            case PlayerPossibleState.HYPER_DASH_JUMP:
-                playerMovementHandler.handleDisableMovement();
-                playerHyperJumpState.stateStart(
-                    playerMovementHandler.direction,
-                    playerDashState.cachedVelocity
-                );
                 break;
         }
 

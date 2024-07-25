@@ -53,7 +53,6 @@ public class PlayerSlideJumpState : MonoBehaviour
     public void stateEnd()
     {
         isStateActive = false;
-        // playerRigidbody.velocity = Vector2.zero;
     }
 
     public void handleJumpEnd()
