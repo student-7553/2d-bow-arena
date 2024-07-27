@@ -7,6 +7,7 @@ public enum PlayerPossibleState
     NONE,
     GROUND,
     FALLING,
+    AIMING,
     DASHING,
     JUMPING,
     SLIDING,
@@ -27,6 +28,7 @@ public class PlayerState : MonoBehaviour
     private PlayerDashState playerDashState;
     private PlayerSlideState playerSlideState;
     private PlayerSlideJumpState playerSlideJumpState;
+    private PlayerAimState playerAimState;
 
     // -------------------------------------------------
 
@@ -40,6 +42,7 @@ public class PlayerState : MonoBehaviour
         playerDashState = GetComponent<PlayerDashState>();
         playerSlideState = GetComponent<PlayerSlideState>();
         playerSlideJumpState = GetComponent<PlayerSlideJumpState>();
+        playerAimState = GetComponent<PlayerAimState>();
 
         currentState = PlayerPossibleState.GROUND;
     }
@@ -65,6 +68,30 @@ public class PlayerState : MonoBehaviour
                 changeState(PlayerPossibleState.SLIDE_JUMPING);
                 break;
         }
+    }
+
+    public void handleShootAction()
+    {
+        if (
+            currentState != PlayerPossibleState.NONE
+            && currentState != PlayerPossibleState.GROUND
+            && currentState != PlayerPossibleState.FALLING
+        )
+        {
+            return;
+        }
+        changeState(PlayerPossibleState.AIMING);
+    }
+
+    public void handleShootActionEnd()
+    {
+        if (currentState != PlayerPossibleState.AIMING)
+        {
+            return;
+        }
+        playerAimState.handleShoot();
+        changeState(PlayerPossibleState.NONE);
+        // if not state do nothing
     }
 
     public void handleDashAction()
@@ -115,6 +142,10 @@ public class PlayerState : MonoBehaviour
                 playerMovementHandler.handleUnDisableMovement();
                 playerDashState.stateEnd();
                 break;
+            case PlayerPossibleState.AIMING:
+                playerMovementHandler.handleUnDisableMovement();
+                playerAimState.stateEnd();
+                break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateEnd();
                 break;
@@ -150,6 +181,10 @@ public class PlayerState : MonoBehaviour
 
                 playerDashState.stateStart(dashDirection);
                 break;
+            case PlayerPossibleState.AIMING:
+                playerMovementHandler.handleDisableMovement();
+                playerAimState.stateStart();
+                break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateStart();
                 break;
@@ -166,6 +201,7 @@ public class PlayerState : MonoBehaviour
         {
             StartCoroutine(handleIsStateChangeOnCooldown());
         }
+
         return true;
     }
 

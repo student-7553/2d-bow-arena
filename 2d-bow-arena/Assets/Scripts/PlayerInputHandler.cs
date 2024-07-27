@@ -3,16 +3,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public InputActionReference jumpAction;
-    public InputActionReference dashAction;
-    public InputActionReference movement2dAction;
+    private InputActionReference jumpAction;
+    private InputActionReference dashAction;
+    private InputActionReference movement2dAction;
+    private InputActionReference shootAction;
+    public Player player;
 
-    private void Start()
+    public void init(PlayerInputs playerInputs)
     {
+        jumpAction = playerInputs.jumpAction;
+        dashAction = playerInputs.dashAction;
+        movement2dAction = playerInputs.movement2dAction;
+        shootAction = playerInputs.shootAction;
+
         jumpAction.action.performed += OnJumpAction;
         dashAction.action.performed += OnDashAction;
         movement2dAction.action.performed += OnMovementActionPerformed;
         movement2dAction.action.canceled += OnMovementActionCanceled;
+
+        shootAction.action.performed += OnShootActionPerformed;
+        shootAction.action.canceled += OnShootActionCanceled;
     }
 
     private void OnDisable()
@@ -21,36 +31,48 @@ public class PlayerInputHandler : MonoBehaviour
         dashAction.action.performed -= OnDashAction;
         movement2dAction.action.performed -= OnMovementActionPerformed;
         movement2dAction.action.canceled -= OnMovementActionCanceled;
+
+        shootAction.action.performed -= OnShootActionPerformed;
+        shootAction.action.canceled -= OnShootActionCanceled;
     }
 
     public void OnJumpAction(InputAction.CallbackContext context)
     {
-        // bool isButtonDown = context.ReadValueAsButton();
-        // if (isButtonDown)
-        // {
-        //     Singelton.GetPlayer().playerstate.handleJumpAction();
-        // }
-        // else
-        // {
-        //     Singelton.GetPlayer().playerstate.handleJumpActionEnd();
-        // }
+        bool isButtonDown = context.ReadValueAsButton();
+        if (isButtonDown)
+        {
+            player.playerstate.handleJumpAction();
+        }
+        else
+        {
+            player.playerstate.handleJumpActionEnd();
+        }
     }
 
     public void OnDashAction(InputAction.CallbackContext context)
     {
-        // Singelton.GetPlayer().playerstate.handleDashAction();
+        player.playerstate.handleDashAction();
     }
 
     public void OnMovementActionPerformed(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-
-        // Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        player.playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 
     public void OnMovementActionCanceled(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-        // Singelton.GetPlayer().playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        player.playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+    }
+
+    public void OnShootActionPerformed(InputAction.CallbackContext context)
+    {
+        player.playerstate.handleShootAction();
+    }
+
+    public void OnShootActionCanceled(InputAction.CallbackContext context)
+    {
+        player.playerstate.handleShootActionEnd();
     }
 }

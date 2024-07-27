@@ -2,18 +2,152 @@
     "name": "Actions",
     "maps": [
         {
-            "name": "Player",
-            "id": "1ceeaccf-1ef3-4a8e-a0f3-a6f496133652",
+            "name": "Player1",
+            "id": "790514bf-546f-465f-b4c1-af8847afc52b",
             "actions": [
                 {
-                    "name": "XMovement",
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "7cf1baee-fdac-4b84-8a7f-06c105cee96f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "2577e248-ffa4-486f-840e-e31bd0be9dc0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Movement",
                     "type": "Value",
-                    "id": "89c3c836-58c5-40c5-a600-bc8753f6ce98",
+                    "id": "f7a38092-260c-47d5-b54d-ee0f37ad85d0",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "db8c0204-c333-4986-89a4-f45caec60f2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2f45b44e-2ccb-452f-b72e-2855a35db5ab",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Press(pressPoint=0.1,behavior=2)",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b631f3ab-6410-4564-9985-1d6f3e9dc042",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7757cb3-fce8-4180-a156-85ce2876b465",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "dd1e1fee-be0c-4d19-a0e9-80cdc7f52aae",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "62ab61bb-8e8b-440e-8932-301dfec2ede4",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "18a89751-b368-466a-aa15-8c6503afe285",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "fcc5007b-ca61-4046-a0c4-1c4d8aa581d3",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "94128a97-11f4-4637-8d5e-b40f316ef7a8",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "30a6c914-3252-4e22-a46b-461fce80e55c",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player2",
+            "id": "1ceeaccf-1ef3-4a8e-a0f3-a6f496133652",
+            "actions": [
                 {
                     "name": "Jump",
                     "type": "Button",
@@ -40,72 +174,26 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "ab39692f-f434-4bc2-9365-f5637793daec",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "1D Axis",
-                    "id": "ca840d19-ac1f-4eb6-bb02-16cf6a854982",
-                    "path": "1DAxis",
-                    "interactions": "Press(behavior=2)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "XMovement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "9b17d5f6-83ee-44ba-b689-7b8a44f6d3c7",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player",
-                    "action": "XMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "b75d2866-d0e7-4195-8d03-c074781c6d03",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player",
-                    "action": "XMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "7b580fff-3654-4d97-a56b-cea6fff1cd0d",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "Press(pressPoint=0.1,behavior=2)",
                     "processors": "",
                     "groups": "Player",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "86f57621-9c5a-4c2c-8358-1393529cd2a1",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fbcdfc00-4438-4ef2-bb07-5694b2099d9a",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player",
-                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -134,7 +222,7 @@
                 {
                     "name": "Up",
                     "id": "be6d5996-d86b-4789-b7c9-600b9dbd9653",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
@@ -145,7 +233,7 @@
                 {
                     "name": "Down",
                     "id": "1de418b0-dd9d-4d92-9d97-64fe6450283d",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
@@ -156,7 +244,7 @@
                 {
                     "name": "Left",
                     "id": "3d583bc7-27d2-4149-9ec1-7eb5f918f251",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
@@ -167,13 +255,24 @@
                 {
                     "name": "Right",
                     "id": "1d55d058-aa8b-4b47-ba93-ba593e61e288",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "45d5da20-7b7a-4dd8-a8bc-517c01e0675b",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

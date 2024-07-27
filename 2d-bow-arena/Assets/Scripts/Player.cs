@@ -3,10 +3,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerState playerstate;
+    public PlayerInputHandler playerInputHandler;
 
     void Start()
     {
-        Singelton.AddPlayer(this);
+        GameManager.instance.initPlayer(this);
     }
 
     public void handleRespawn()
