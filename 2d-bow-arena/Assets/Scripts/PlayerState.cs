@@ -90,6 +90,7 @@ public class PlayerState : MonoBehaviour
             return;
         }
         playerAimState.handleShoot();
+
         changeState(PlayerPossibleState.NONE);
         // if not state do nothing
     }
