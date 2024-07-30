@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System;
 
 public enum PlayerPossibleState
 {
@@ -19,8 +20,10 @@ public class PlayerState : MonoBehaviour
     [SerializeField]
     public PlayerPossibleState currentState;
 
-    public PlayerObserver playerObserver;
+    [NonSerialized]
+    public Player player;
 
+    [NonSerialized]
     public PlayerMovementHandler playerMovementHandler;
 
     // ------------------STATES-------------------------------
@@ -36,7 +39,8 @@ public class PlayerState : MonoBehaviour
 
     void Start()
     {
-        playerObserver = GetComponent<PlayerObserver>();
+        // player.playerObserver.= GetComponent<PlayerObserver>();
+        player = GetComponent<Player>();
         playerMovementHandler = GetComponent<PlayerMovementHandler>();
         playerJumpHandler = GetComponent<PlayerJumpState>();
         playerDashState = GetComponent<PlayerDashState>();
@@ -59,8 +63,8 @@ public class PlayerState : MonoBehaviour
                 break;
             case PlayerPossibleState.FALLING:
                 if (
-                    playerObserver.observedState != ObservedState.NEAR_LEFT_WALL
-                    && playerObserver.observedState != ObservedState.NEAR_RIGHT_WALL
+                    player.playerObserver.observedState != ObservedState.NEAR_LEFT_WALL
+                    && player.playerObserver.observedState != ObservedState.NEAR_RIGHT_WALL
                 )
                 {
                     return;
@@ -77,6 +81,10 @@ public class PlayerState : MonoBehaviour
             && currentState != PlayerPossibleState.GROUND
             && currentState != PlayerPossibleState.FALLING
         )
+        {
+            return;
+        }
+        if (player.arrowCount == 0)
         {
             return;
         }
@@ -97,7 +105,7 @@ public class PlayerState : MonoBehaviour
 
     public void handleDashAction()
     {
-        if (!playerObserver.isDashAvailable)
+        if (!player.isDashAvailable)
         {
             return;
         }
@@ -164,12 +172,14 @@ public class PlayerState : MonoBehaviour
             case PlayerPossibleState.SLIDE_JUMPING:
                 playerMovementHandler.handleDisableMovement();
                 playerSlideJumpState.stateStart(
-                    playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL ? true : false
+                    player.playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL
+                        ? true
+                        : false
                 );
                 break;
             case PlayerPossibleState.DASHING:
                 playerMovementHandler.handleDisableMovement();
-                playerObserver.dashMark();
+                player.dashMark();
 
                 Vector2 dashDirection = playerMovementHandler.direction;
                 if (dashDirection == Vector2.zero)

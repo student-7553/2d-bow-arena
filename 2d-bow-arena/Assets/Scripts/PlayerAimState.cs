@@ -44,7 +44,7 @@ public class PlayerAimState : MonoBehaviour
 
         arrow.startShoot(direction);
 
-        // is aiming
+        playerState.player.arrowCount--;
     }
 
     private bool isAiming(Vector2 direction)

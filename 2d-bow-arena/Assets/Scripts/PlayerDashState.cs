@@ -26,7 +26,7 @@ public class PlayerDashState : MonoBehaviour
     {
         Vector2 effectiveDirection = currentDirection;
 
-        switch (playerState.playerObserver.observedState)
+        switch (playerState.player.playerObserver.observedState)
         {
             case ObservedState.NEAR_LEFT_WALL:
             case ObservedState.NEAR_RIGHT_WALL:

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxThrustTickCount: 25
-  travelVelocity: 10
+  travelVelocity: 15
 --- !u!212 &7090039178611894189
 SpriteRenderer:
   m_ObjectHideFlags: 0

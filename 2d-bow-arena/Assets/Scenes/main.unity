@@ -227,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &186956116
 Transform:
   m_ObjectHideFlags: 0
@@ -843,7 +843,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observedState: 0
-  isDashAvailable: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -860,8 +859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  playerObserver: {fileID: 0}
-  playerMovementHandler: {fileID: 0}
   isStateChangeOnCooldown: 0
 --- !u!114 &1292924931
 MonoBehaviour:
@@ -934,6 +931,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerstate: {fileID: 1292924930}
   playerInputHandler: {fileID: 1292924941}
+  playerObserver: {fileID: 1292924929}
+  isDashAvailable: 0
+  arrowCount: 3
 --- !u!114 &1292924941
 MonoBehaviour:
   m_ObjectHideFlags: 0

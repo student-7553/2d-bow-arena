@@ -15,10 +15,9 @@ public class PlayerObserver : MonoBehaviour
     private float yMargin;
     private float xMargin;
 
-    private PlayerState playerState;
+    private Player player;
 
     public ObservedState observedState;
-    public bool isDashAvailable;
 
     public LayerMask layerMask;
 
@@ -28,45 +27,25 @@ public class PlayerObserver : MonoBehaviour
         yMargin = (playerCollider.size.y / 2f) - 0.1f;
         xMargin = (playerCollider.size.x / 2f) - 0.1f;
 
-        playerState = GetComponent<PlayerState>();
+        player = GetComponent<Player>();
     }
 
     private void FixedUpdate()
     {
         observedState = getObservedState();
-        handleDashCooldown();
+        // handleDashCooldown();
         handleSelfStates();
-    }
-
-    public void handleDashCooldown()
-    {
-        if (observedState != ObservedState.GROUND)
-        {
-            return;
-        }
-
-        if (playerState.currentState == PlayerPossibleState.DASHING)
-        {
-            return;
-        }
-
-        isDashAvailable = true;
-    }
-
-    public void dashMark()
-    {
-        isDashAvailable = false;
     }
 
     private void handleSelfStates()
     {
         if (
-            playerState.isStateChangeOnCooldown
+            player.playerstate.isStateChangeOnCooldown
             || (
-                playerState.currentState != PlayerPossibleState.NONE
-                && playerState.currentState != PlayerPossibleState.FALLING
-                && playerState.currentState != PlayerPossibleState.GROUND
-                && playerState.currentState != PlayerPossibleState.SLIDING
+                player.playerstate.currentState != PlayerPossibleState.NONE
+                && player.playerstate.currentState != PlayerPossibleState.FALLING
+                && player.playerstate.currentState != PlayerPossibleState.GROUND
+                && player.playerstate.currentState != PlayerPossibleState.SLIDING
             )
         )
         {
@@ -75,27 +54,26 @@ public class PlayerObserver : MonoBehaviour
 
         if (observedState == ObservedState.GROUND)
         {
-            playerState.changeState(PlayerPossibleState.GROUND);
+            player.playerstate.changeState(PlayerPossibleState.GROUND);
             return;
         }
         if (
             observedState == ObservedState.NEAR_LEFT_WALL
-            && playerState.playerMovementHandler.direction.x < 0
+            && player.playerstate.playerMovementHandler.direction.x < 0
         )
         {
-            playerState.changeState(PlayerPossibleState.SLIDING);
+            player.playerstate.changeState(PlayerPossibleState.SLIDING);
             return;
         }
         if (
             observedState == ObservedState.NEAR_RIGHT_WALL
-            && playerState.playerMovementHandler.direction.x > 0
+            && player.playerstate.playerMovementHandler.direction.x > 0
         )
         {
-            playerState.changeState(PlayerPossibleState.SLIDING);
+            player.playerstate.changeState(PlayerPossibleState.SLIDING);
             return;
         }
-        //
-        playerState.changeState(PlayerPossibleState.FALLING);
+        player.playerstate.changeState(PlayerPossibleState.FALLING);
     }
 
     private ObservedState getObservedState()

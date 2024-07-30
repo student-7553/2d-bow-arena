@@ -72,11 +72,21 @@ public class Arrow : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         setNotActive();
+        Debug.Log("OnCollisionEnter2D" + col.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         // collected by the player
+        Debug.Log("OnTriggerEnter2D" + col.gameObject);
+        Player player = col.gameObject.GetComponent<Player>();
+        if (player == null)
+        {
+            throw new System.Exception("Player is empty in arrow OnTriggerEnter2D");
+        }
+        Debug.Log("Increased arrow count");
+        player.arrowCount++;
+        Destroy(gameObject);
     }
 
     private void handleThrust()
