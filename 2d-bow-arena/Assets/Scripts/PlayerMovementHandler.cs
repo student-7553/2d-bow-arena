@@ -23,6 +23,7 @@ public enum LookingDirection
 public class PlayerMovementHandler : MonoBehaviour
 {
     private Rigidbody2D playerRigidbody;
+    private BoxCollider2D playerCollider;
 
     public Vector2 direction;
     public LookingDirection lookingDirection;
@@ -37,6 +38,7 @@ public class PlayerMovementHandler : MonoBehaviour
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
     }
 
     private void FixedUpdate()
@@ -106,5 +108,11 @@ public class PlayerMovementHandler : MonoBehaviour
     public void handleUnDisableMovement()
     {
         isDisabled = false;
+    }
+
+    public void handleChangeToTrigger()
+    {
+        playerRigidbody.bodyType = RigidbodyType2D.Static;
+        playerCollider.isTrigger = true;
     }
 }

@@ -12,7 +12,8 @@ public enum PlayerPossibleState
     DASHING,
     JUMPING,
     SLIDING,
-    SLIDE_JUMPING
+    SLIDE_JUMPING,
+    DEAD,
 }
 
 public class PlayerState : MonoBehaviour
@@ -22,9 +23,6 @@ public class PlayerState : MonoBehaviour
 
     [NonSerialized]
     public Player player;
-
-    [NonSerialized]
-    public PlayerMovementHandler playerMovementHandler;
 
     // ------------------STATES-------------------------------
     private PlayerJumpState playerJumpHandler;
@@ -39,9 +37,7 @@ public class PlayerState : MonoBehaviour
 
     void Start()
     {
-        // player.playerObserver.= GetComponent<PlayerObserver>();
         player = GetComponent<Player>();
-        playerMovementHandler = GetComponent<PlayerMovementHandler>();
         playerJumpHandler = GetComponent<PlayerJumpState>();
         playerDashState = GetComponent<PlayerDashState>();
         playerSlideState = GetComponent<PlayerSlideState>();
@@ -105,6 +101,11 @@ public class PlayerState : MonoBehaviour
 
     public void handleDashAction()
     {
+        if (currentState == PlayerPossibleState.DEAD)
+        {
+            return;
+        }
+
         if (!player.isDashAvailable)
         {
             return;
@@ -148,18 +149,18 @@ public class PlayerState : MonoBehaviour
                 playerJumpHandler.stateEnd();
                 break;
             case PlayerPossibleState.DASHING:
-                playerMovementHandler.handleUnDisableMovement();
+                player.playerMovementHandler.handleUnDisableMovement();
                 playerDashState.stateEnd();
                 break;
             case PlayerPossibleState.AIMING:
-                playerMovementHandler.handleUnDisableMovement();
+                player.playerMovementHandler.handleUnDisableMovement();
                 playerAimState.stateEnd();
                 break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateEnd();
                 break;
             case PlayerPossibleState.SLIDE_JUMPING:
-                playerMovementHandler.handleUnDisableMovement();
+                player.playerMovementHandler.handleUnDisableMovement();
                 playerSlideJumpState.stateEnd();
                 break;
         }
@@ -167,10 +168,10 @@ public class PlayerState : MonoBehaviour
         switch (newState)
         {
             case PlayerPossibleState.JUMPING:
-                playerJumpHandler.stateStart(playerMovementHandler.direction);
+                playerJumpHandler.stateStart(player.playerMovementHandler.direction);
                 break;
             case PlayerPossibleState.SLIDE_JUMPING:
-                playerMovementHandler.handleDisableMovement();
+                player.playerMovementHandler.handleDisableMovement();
                 playerSlideJumpState.stateStart(
                     player.playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL
                         ? true
@@ -178,14 +179,14 @@ public class PlayerState : MonoBehaviour
                 );
                 break;
             case PlayerPossibleState.DASHING:
-                playerMovementHandler.handleDisableMovement();
+                player.playerMovementHandler.handleDisableMovement();
                 player.dashMark();
 
-                Vector2 dashDirection = playerMovementHandler.direction;
+                Vector2 dashDirection = player.playerMovementHandler.direction;
                 if (dashDirection == Vector2.zero)
                 {
                     dashDirection =
-                        playerMovementHandler.lookingDirection == LookingDirection.LEFT
+                        player.playerMovementHandler.lookingDirection == LookingDirection.LEFT
                             ? Vector2.left
                             : Vector2.right;
                 }
@@ -193,7 +194,7 @@ public class PlayerState : MonoBehaviour
                 playerDashState.stateStart(dashDirection);
                 break;
             case PlayerPossibleState.AIMING:
-                playerMovementHandler.handleDisableMovement();
+                player.playerMovementHandler.handleDisableMovement();
                 playerAimState.stateStart();
                 break;
             case PlayerPossibleState.SLIDING:

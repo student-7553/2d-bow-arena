@@ -58,33 +58,43 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private void setNotActive()
+    private void handleHitWall()
     {
         isAlive = false;
-        if (arrowRigidBody.gravityScale == 0)
-        {
-            arrowRigidBody.gravityScale = cachedGravityScale;
-        }
         arrowRigidBody.bodyType = RigidbodyType2D.Static;
         arrowCollider.isTrigger = true;
     }
 
+    private void handleHitPlayer(GameObject playerGameObject)
+    {
+        Player player = playerGameObject.GetComponent<Player>();
+        if (player == null)
+        {
+            throw new System.Exception("Player is empty in arrow handleHitPlayer");
+        }
+        player.handleHit(); // arrow needs to be inside the player's transform
+        // apply force to the player of the arrow's direction
+        // player needs to stop moving
+        //
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
-        setNotActive();
-        Debug.Log("OnCollisionEnter2D" + col.gameObject);
+        if (col.gameObject.tag == "Player")
+        {
+            handleHitPlayer(col.gameObject);
+            return;
+        }
+        handleHitWall();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        // collected by the player
-        Debug.Log("OnTriggerEnter2D" + col.gameObject);
         Player player = col.gameObject.GetComponent<Player>();
         if (player == null)
         {
             throw new System.Exception("Player is empty in arrow OnTriggerEnter2D");
         }
-        Debug.Log("Increased arrow count");
         player.arrowCount++;
         Destroy(gameObject);
     }

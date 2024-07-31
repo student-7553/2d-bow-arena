@@ -26,7 +26,7 @@ public class PlayerAimState : MonoBehaviour
 
     public void handleShoot()
     {
-        Vector2 direction = playerState.playerMovementHandler.direction;
+        Vector2 direction = playerState.player.playerMovementHandler.direction;
         if (!isAiming(direction))
         {
             return;

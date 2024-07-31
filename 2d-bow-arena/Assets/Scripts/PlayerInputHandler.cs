@@ -57,13 +57,13 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMovementActionPerformed(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-        player.playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        player.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 
     public void OnMovementActionCanceled(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-        player.playerstate.playerMovementHandler.handlePlayerDirectionInput(value);
+        player.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 
     public void OnShootActionPerformed(InputAction.CallbackContext context)

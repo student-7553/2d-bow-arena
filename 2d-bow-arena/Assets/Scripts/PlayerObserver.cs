@@ -59,7 +59,7 @@ public class PlayerObserver : MonoBehaviour
         }
         if (
             observedState == ObservedState.NEAR_LEFT_WALL
-            && player.playerstate.playerMovementHandler.direction.x < 0
+            && player.playerMovementHandler.direction.x < 0
         )
         {
             player.playerstate.changeState(PlayerPossibleState.SLIDING);
@@ -67,7 +67,7 @@ public class PlayerObserver : MonoBehaviour
         }
         if (
             observedState == ObservedState.NEAR_RIGHT_WALL
-            && player.playerstate.playerMovementHandler.direction.x > 0
+            && player.playerMovementHandler.direction.x > 0
         )
         {
             player.playerstate.changeState(PlayerPossibleState.SLIDING);
