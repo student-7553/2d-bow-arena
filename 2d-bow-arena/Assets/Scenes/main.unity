@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 6119954}
   - component: {fileID: 6119953}
   - component: {fileID: 6119952}
+  - component: {fileID: 6119967}
   m_Layer: 6
   m_Name: Player2
   m_TagString: Player
@@ -197,7 +198,7 @@ MonoBehaviour:
   playerMovementHandler: {fileID: 6119963}
   isDashAvailable: 0
   arrowCount: 3
-  isActive: 0
+  arrowForce: 0
 --- !u!114 &6119955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +314,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 310
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -370,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1034a1359a5dd34da83dbbb93fcf603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigidbody: {fileID: 0}
   direction: {x: 0, y: 0}
   lookingDirection: 0
   velocityLimit: 4
@@ -457,6 +459,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6119967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a454d7c3dd13bf419d6e71291d5a921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &67976513
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,8 +830,8 @@ MonoBehaviour:
     m_ActionId: 89c3c836-58c5-40c5-a600-bc8753f6ce98
     m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player1
+  m_DefaultControlScheme: Player
+  m_DefaultActionMap: PlayersDefault
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &746640122
@@ -957,10 +971,10 @@ MonoBehaviour:
     dashAction: {fileID: 1868191051814781141, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
     movement2dAction: {fileID: 1823784267324867925, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
     shootAction: {fileID: -3494572008495006382, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
-  - jumpAction: {fileID: -5549182729638475130, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
-    dashAction: {fileID: 1830251537500922972, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
-    movement2dAction: {fileID: -2899967145748956660, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
-    shootAction: {fileID: -4353146121891949110, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
+  - jumpAction: {fileID: -1429523640796191598, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
+    dashAction: {fileID: -4028623786850758101, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
+    movement2dAction: {fileID: -1276822477127365582, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
+    shootAction: {fileID: -2166199788893070119, guid: f0656c8ad5a2d3141a32fa332f9dad5f, type: 3}
   currentPlayers: 0
 --- !u!1 &1292924922
 GameObject:
@@ -985,6 +999,7 @@ GameObject:
   - component: {fileID: 1292924940}
   - component: {fileID: 1292924941}
   - component: {fileID: 1292924942}
+  - component: {fileID: 1292924943}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1071,6 +1086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1034a1359a5dd34da83dbbb93fcf603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigidbody: {fileID: 0}
   direction: {x: 0, y: 0}
   lookingDirection: 0
   velocityLimit: 4
@@ -1092,7 +1108,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 310
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1269,7 +1285,7 @@ MonoBehaviour:
   playerMovementHandler: {fileID: 1292924925}
   isDashAvailable: 0
   arrowCount: 3
-  isActive: 0
+  arrowForce: 0
 --- !u!114 &1292924941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,6 +1312,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 3731493661315329203, guid: c2b58bb4d60910e469c696290ca24f12, type: 3}
+--- !u!114 &1292924943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a454d7c3dd13bf419d6e71291d5a921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1621282042
 GameObject:
   m_ObjectHideFlags: 0

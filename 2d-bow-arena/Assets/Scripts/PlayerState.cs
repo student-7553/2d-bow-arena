@@ -30,6 +30,7 @@ public class PlayerState : MonoBehaviour
     private PlayerSlideState playerSlideState;
     private PlayerSlideJumpState playerSlideJumpState;
     private PlayerAimState playerAimState;
+    private PlayerDeadState playerDeadState;
 
     // -------------------------------------------------
 
@@ -43,6 +44,7 @@ public class PlayerState : MonoBehaviour
         playerSlideState = GetComponent<PlayerSlideState>();
         playerSlideJumpState = GetComponent<PlayerSlideJumpState>();
         playerAimState = GetComponent<PlayerAimState>();
+        playerDeadState = GetComponent<PlayerDeadState>();
 
         currentState = PlayerPossibleState.GROUND;
     }
@@ -199,6 +201,9 @@ public class PlayerState : MonoBehaviour
                 break;
             case PlayerPossibleState.SLIDING:
                 playerSlideState.stateStart();
+                break;
+            case PlayerPossibleState.DEAD:
+                playerDeadState.stateStart();
                 break;
         }
 

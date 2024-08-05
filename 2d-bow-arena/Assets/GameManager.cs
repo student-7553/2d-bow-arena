@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private List<Player> players = new List<Player>();
 
     [SerializeField]
-    private int currentPlayers = 0;
+    private int currentPlayers = 1;
 
     private void Awake()
     {
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         {
             throw new Exception("Requesting player overflow");
         }
+
+        Debug.Log(currentPlayers);
 
         player.playerInputHandler.init(playerInputs[currentPlayers]);
         players.Add(player);

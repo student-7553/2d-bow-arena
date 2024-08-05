@@ -2,11 +2,11 @@
     "name": "Actions",
     "maps": [
         {
-            "name": "Player1",
+            "name": "PlayersDefault",
             "id": "790514bf-546f-465f-b4c1-af8847afc52b",
             "actions": [
                 {
-                    "name": "Jump",
+                    "name": "P1Jump",
                     "type": "Button",
                     "id": "7cf1baee-fdac-4b84-8a7f-06c105cee96f",
                     "expectedControlType": "Button",
@@ -15,7 +15,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "P2Jump",
+                    "type": "Button",
+                    "id": "07e2d8c4-578b-4dc7-89e2-b0adb74f6c40",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P1Dash",
                     "type": "Button",
                     "id": "2577e248-ffa4-486f-840e-e31bd0be9dc0",
                     "expectedControlType": "Button",
@@ -24,7 +33,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Movement",
+                    "name": "P2Dash",
+                    "type": "Button",
+                    "id": "cfbbe09f-419f-471e-9e60-dec7a10f1f2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P1Movement",
                     "type": "Value",
                     "id": "f7a38092-260c-47d5-b54d-ee0f37ad85d0",
                     "expectedControlType": "Vector2",
@@ -33,9 +51,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Shoot",
+                    "name": "P2Movement",
+                    "type": "Value",
+                    "id": "31e37467-b079-4a9a-bfb2-71f26f44d23e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "P1Shoot",
                     "type": "Button",
                     "id": "db8c0204-c333-4986-89a4-f45caec60f2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P2Shoot",
+                    "type": "Button",
+                    "id": "f1f414b1-2d9d-4a46-9d6d-a0e95341bbfa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -50,7 +86,7 @@
                     "interactions": "Press(pressPoint=0.1,behavior=2)",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Jump",
+                    "action": "P1Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -61,7 +97,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Dash",
+                    "action": "P1Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -72,7 +108,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Dash",
+                    "action": "P1Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -83,7 +119,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "P1Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -94,7 +130,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P1Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -105,7 +141,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P1Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -116,7 +152,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P1Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -127,7 +163,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P1Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -138,139 +174,95 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shoot",
+                    "action": "P1Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Player2",
-            "id": "1ceeaccf-1ef3-4a8e-a0f3-a6f496133652",
-            "actions": [
-                {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "9e68c2c3-d8dc-4cbe-8ba7-51370b688ffd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
-                {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "b7b2605a-a800-4f25-bea8-b5b879314fe3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Movement",
-                    "type": "Value",
-                    "id": "226f0981-d81d-40dd-8073-33444b6c0b7e",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "ab39692f-f434-4bc2-9365-f5637793daec",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
                 {
                     "name": "",
-                    "id": "7b580fff-3654-4d97-a56b-cea6fff1cd0d",
+                    "id": "3239e18a-3ad8-415a-b6ea-e394035d2e6f",
                     "path": "<Keyboard>/enter",
                     "interactions": "Press(pressPoint=0.1,behavior=2)",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Jump",
+                    "action": "P2Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7fbfb68c-4dc5-4a9b-b289-42c50df2ae0d",
-                    "path": "<Keyboard>/rightShift",
+                    "id": "bf66bd0e-47ca-4369-8384-c26bcd5a2f40",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Dash",
+                    "action": "P2Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "2D Vector",
-                    "id": "e672669d-38c9-482b-81ca-860b1729b251",
+                    "id": "42447b01-7b81-4459-bacd-909c803216e4",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "P2Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "Up",
-                    "id": "be6d5996-d86b-4789-b7c9-600b9dbd9653",
+                    "id": "699c5431-d007-4031-992a-bd8e0c78fd47",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P2Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "Down",
-                    "id": "1de418b0-dd9d-4d92-9d97-64fe6450283d",
+                    "id": "1ac9102a-139a-475a-bea0-c04cfd81f545",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P2Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "Left",
-                    "id": "3d583bc7-27d2-4149-9ec1-7eb5f918f251",
+                    "id": "4c6440df-809c-4bc3-8716-ccc2efd75d19",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P2Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "Right",
-                    "id": "1d55d058-aa8b-4b47-ba93-ba593e61e288",
+                    "id": "a51045fa-2364-40ca-93cb-c38aa53c635d",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Movement",
+                    "action": "P2Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "45d5da20-7b7a-4dd8-a8bc-517c01e0675b",
+                    "id": "4893e7cd-2915-4ecc-b261-fd3ee19ee60b",
                     "path": "<Keyboard>/backslash",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shoot",
+                    "action": "P2Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

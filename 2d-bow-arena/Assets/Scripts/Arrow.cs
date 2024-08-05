@@ -58,10 +58,11 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private void handleHitWall()
+    private void handleStationary()
     {
         isAlive = false;
-        arrowRigidBody.bodyType = RigidbodyType2D.Static;
+        arrowRigidBody.bodyType = RigidbodyType2D.Kinematic;
+        arrowRigidBody.velocity = Vector2.zero;
         arrowCollider.isTrigger = true;
     }
 
@@ -72,10 +73,20 @@ public class Arrow : MonoBehaviour
         {
             throw new System.Exception("Player is empty in arrow handleHitPlayer");
         }
-        player.handleHit(); // arrow needs to be inside the player's transform
-        // apply force to the player of the arrow's direction
-        // player needs to stop moving
-        //
+
+        Debug.Log(player.playerstate.currentState);
+
+        // if (player.playerstate.currentState == PlayerPossibleState.DEAD)
+        // {
+        //     Debug.Log("Dead player hit");
+        //     return;
+        // }
+
+        gameObject.transform.SetParent(player.transform);
+
+        handleStationary();
+
+        player.handleHit();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -85,11 +96,17 @@ public class Arrow : MonoBehaviour
             handleHitPlayer(col.gameObject);
             return;
         }
-        handleHitWall();
+
+        handleStationary();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (transform.parent != null && col.gameObject == transform.parent.gameObject)
+        {
+            return;
+        }
+
         Player player = col.gameObject.GetComponent<Player>();
         if (player == null)
         {

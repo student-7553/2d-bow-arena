@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public bool isDashAvailable;
     public int arrowCount;
 
+    public float arrowForce;
+
     void Start()
     {
         GameManager.instance.initPlayer(this);
@@ -27,12 +29,14 @@ public class Player : MonoBehaviour
 
     public void handleHit()
     {
-        // isActive = false;
-        playerstate.changeState(PlayerPossibleState.DEAD);
-        playerMovementHandler.handleDisableMovement();
+        if (playerstate.currentState == PlayerPossibleState.DEAD)
+        {
+            return;
+        }
 
-        //
-        playerMovementHandler.handleChangeToTrigger();
+        playerstate.changeState(PlayerPossibleState.DEAD);
+        gameObject.layer = 8;
+        // playerMovementHandler.playerRigidbody.AddForce(arrowDirection * arrowForce);
     }
 
     public void dashMark()

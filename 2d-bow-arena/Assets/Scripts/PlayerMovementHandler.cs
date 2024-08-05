@@ -22,7 +22,7 @@ public enum LookingDirection
 
 public class PlayerMovementHandler : MonoBehaviour
 {
-    private Rigidbody2D playerRigidbody;
+    public Rigidbody2D playerRigidbody;
     private BoxCollider2D playerCollider;
 
     public Vector2 direction;
@@ -110,9 +110,11 @@ public class PlayerMovementHandler : MonoBehaviour
         isDisabled = false;
     }
 
+    // Todo make it so  Players ignore colision from other player
+
     public void handleChangeToTrigger()
     {
-        playerRigidbody.bodyType = RigidbodyType2D.Static;
-        playerCollider.isTrigger = true;
+        // playerRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        // playerCollider.isTrigger = true;
     }
 }

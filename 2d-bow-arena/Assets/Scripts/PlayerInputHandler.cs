@@ -16,6 +16,9 @@ public class PlayerInputHandler : MonoBehaviour
         movement2dAction = playerInputs.movement2dAction;
         shootAction = playerInputs.shootAction;
 
+        Debug.Log(gameObject + "/init");
+        Debug.Log("movement/" + playerInputs.movement2dAction);
+
         jumpAction.action.performed += OnJumpAction;
         dashAction.action.performed += OnDashAction;
         movement2dAction.action.performed += OnMovementActionPerformed;
@@ -27,13 +30,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        jumpAction.action.performed -= OnJumpAction;
-        dashAction.action.performed -= OnDashAction;
-        movement2dAction.action.performed -= OnMovementActionPerformed;
-        movement2dAction.action.canceled -= OnMovementActionCanceled;
+        // jumpAction.action.performed -= OnJumpAction;
+        // dashAction.action.performed -= OnDashAction;
+        // movement2dAction.action.performed -= OnMovementActionPerformed;
+        // movement2dAction.action.canceled -= OnMovementActionCanceled;
 
-        shootAction.action.performed -= OnShootActionPerformed;
-        shootAction.action.canceled -= OnShootActionCanceled;
+        // shootAction.action.performed -= OnShootActionPerformed;
+        // shootAction.action.canceled -= OnShootActionCanceled;
     }
 
     public void OnJumpAction(InputAction.CallbackContext context)
@@ -57,6 +60,7 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMovementActionPerformed(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
+        Debug.Log(value);
         player.playerMovementHandler.handlePlayerDirectionInput(value);
     }
 
