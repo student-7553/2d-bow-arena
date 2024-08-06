@@ -32,8 +32,6 @@ public class PlayerAimState : MonoBehaviour
             return;
         }
 
-        Debug.Log("Shot/" + direction);
-
         Vector3 location = transform.position + new Vector3(direction.x, direction.y, 0);
         GameObject spawnedArrowObject = Instantiate(arrowPrefab, location, Quaternion.identity);
         Arrow arrow = spawnedArrowObject.GetComponent<Arrow>();

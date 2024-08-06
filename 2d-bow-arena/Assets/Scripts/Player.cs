@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum PlayerArrowHitResult
+{
+    HIT,
+    CATCHED
+}
+
 public class Player : MonoBehaviour
 {
     public PlayerState playerstate;
@@ -27,21 +33,31 @@ public class Player : MonoBehaviour
         Debug.Log("Handle restart.......");
     }
 
-    public void handleHit()
+    public PlayerArrowHitResult handleArrowHit()
     {
-        if (playerstate.currentState == PlayerPossibleState.DEAD)
+        if (playerstate.currentState == PlayerPossibleState.DASHING)
         {
-            return;
+            grabArrow();
+            playerMovementHandler.playerRigidbody.velocity = Vector2.zero;
+            return PlayerArrowHitResult.CATCHED;
         }
 
         playerstate.changeState(PlayerPossibleState.DEAD);
+
+        // Setting the player to dead player layer
         gameObject.layer = 8;
-        // playerMovementHandler.playerRigidbody.AddForce(arrowDirection * arrowForce);
+
+        return PlayerArrowHitResult.HIT;
     }
 
-    public void dashMark()
+    public void startDash()
     {
         isDashAvailable = false;
+    }
+
+    public void grabArrow()
+    {
+        arrowCount++;
     }
 
     public void handleDashCooldown()

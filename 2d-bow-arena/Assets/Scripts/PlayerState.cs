@@ -165,6 +165,9 @@ public class PlayerState : MonoBehaviour
                 player.playerMovementHandler.handleUnDisableMovement();
                 playerSlideJumpState.stateEnd();
                 break;
+            case PlayerPossibleState.DEAD:
+                playerDeadState.stateEnd();
+                break;
         }
 
         switch (newState)
@@ -182,7 +185,7 @@ public class PlayerState : MonoBehaviour
                 break;
             case PlayerPossibleState.DASHING:
                 player.playerMovementHandler.handleDisableMovement();
-                player.dashMark();
+                player.startDash();
 
                 Vector2 dashDirection = player.playerMovementHandler.direction;
                 if (dashDirection == Vector2.zero)

@@ -40,8 +40,6 @@ public class GameManager : MonoBehaviour
             throw new Exception("Requesting player overflow");
         }
 
-        Debug.Log(currentPlayers);
-
         player.playerInputHandler.init(playerInputs[currentPlayers]);
         players.Add(player);
         currentPlayers++;

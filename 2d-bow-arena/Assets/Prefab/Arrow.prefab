@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a9991079e15b94fa10b98051924be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationaryLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   maxThrustTickCount: 25
   travelVelocity: 15
 --- !u!212 &7090039178611894189
@@ -127,7 +130,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &6387306491899768607
 BoxCollider2D:
   m_ObjectHideFlags: 0

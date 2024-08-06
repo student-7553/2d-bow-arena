@@ -5,6 +5,8 @@ public class Arrow : MonoBehaviour
     private Rigidbody2D arrowRigidBody;
     private BoxCollider2D arrowCollider;
 
+    public LayerMask stationaryLayerMask;
+
     private Vector2 direction;
 
     private bool isAlive;
@@ -64,6 +66,24 @@ public class Arrow : MonoBehaviour
         arrowRigidBody.bodyType = RigidbodyType2D.Kinematic;
         arrowRigidBody.velocity = Vector2.zero;
         arrowCollider.isTrigger = true;
+
+        arrowRigidBody.includeLayers = stationaryLayerMask;
+
+        // arrowCollider
+        // arrw
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            // player hit
+            handleHitPlayer(col.gameObject);
+            return;
+        }
+
+        // wall hit
+        handleStationary();
     }
 
     private void handleHitPlayer(GameObject playerGameObject)
@@ -74,45 +94,33 @@ public class Arrow : MonoBehaviour
             throw new System.Exception("Player is empty in arrow handleHitPlayer");
         }
 
-        Debug.Log(player.playerstate.currentState);
-
-        // if (player.playerstate.currentState == PlayerPossibleState.DEAD)
-        // {
-        //     Debug.Log("Dead player hit");
-        //     return;
-        // }
-
-        gameObject.transform.SetParent(player.transform);
-
-        handleStationary();
-
-        player.handleHit();
-    }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Player")
+        PlayerArrowHitResult arrowHitResult = player.handleArrowHit();
+        switch (arrowHitResult)
         {
-            handleHitPlayer(col.gameObject);
-            return;
+            case PlayerArrowHitResult.HIT:
+                gameObject.transform.SetParent(player.transform);
+                handleStationary();
+                break;
+            case PlayerArrowHitResult.CATCHED:
+                Destroy(gameObject);
+                break;
+            default:
+                Debug.LogError($"Unknown PlayerArrowHitResult{arrowHitResult}");
+                break;
         }
-
-        handleStationary();
     }
 
+    // Only gets called after the arrow has turned staionary
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (transform.parent != null && col.gameObject == transform.parent.gameObject)
-        {
-            return;
-        }
-
         Player player = col.gameObject.GetComponent<Player>();
         if (player == null)
         {
+            // can be wall I guess change layer yes
             throw new System.Exception("Player is empty in arrow OnTriggerEnter2D");
         }
-        player.arrowCount++;
+
+        player.grabArrow();
         Destroy(gameObject);
     }
 
