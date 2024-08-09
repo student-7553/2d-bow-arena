@@ -37,8 +37,6 @@ public class Player : MonoBehaviour
 
     public void handleRespawn()
     {
-        Debug.Log("Handle respawn.......");
-
         playerstate.changeState(PlayerPossibleState.NONE);
         if (stuckArrow != null)
         {
