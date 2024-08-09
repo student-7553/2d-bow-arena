@@ -99,13 +99,15 @@ public class Arrow : MonoBehaviour
         {
             case PlayerArrowHitResult.HIT:
                 gameObject.transform.SetParent(player.transform);
+                player.stuckArrow = this;
+
                 handleStationary();
                 break;
             case PlayerArrowHitResult.CATCHED:
                 Destroy(gameObject);
                 break;
             default:
-                Debug.LogError($"Unknown PlayerArrowHitResult{arrowHitResult}");
+                Debug.LogError($"Unknown PlayerArrowHitResult {arrowHitResult}");
                 break;
         }
     }

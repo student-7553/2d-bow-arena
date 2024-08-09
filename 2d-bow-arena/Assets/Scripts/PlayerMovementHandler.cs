@@ -110,11 +110,9 @@ public class PlayerMovementHandler : MonoBehaviour
         isDisabled = false;
     }
 
-    // Todo make it so  Players ignore colision from other player
-
-    public void handleChangeToTrigger()
-    {
-        // playerRigidbody.bodyType = RigidbodyType2D.Kinematic;
-        // playerCollider.isTrigger = true;
-    }
+    // public void handleChangeToTrigger()
+    // {
+    //     // playerRigidbody.bodyType = RigidbodyType2D.Kinematic;
+    //     // playerCollider.isTrigger = true;
+    // }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum PlayerArrowHitResult
@@ -13,14 +14,20 @@ public class Player : MonoBehaviour
     public PlayerObserver playerObserver;
     public PlayerMovementHandler playerMovementHandler;
 
+    [NonSerialized]
+    public Arrow stuckArrow;
+
+    public int playerId;
+
     public bool isDashAvailable;
     public int arrowCount;
-
-    public float arrowForce;
+    public int deathCount;
+    public Vector3 spawnLocation;
 
     void Start()
     {
-        GameManager.instance.initPlayer(this);
+        playerId = GameManager.instance.initPlayer(this);
+        spawnLocation = transform.position;
     }
 
     private void FixedUpdate()
@@ -30,7 +37,15 @@ public class Player : MonoBehaviour
 
     public void handleRespawn()
     {
-        Debug.Log("Handle restart.......");
+        Debug.Log("Handle respawn.......");
+
+        playerstate.changeState(PlayerPossibleState.NONE);
+        if (stuckArrow != null)
+        {
+            Destroy(stuckArrow.gameObject);
+        }
+
+        gameObject.transform.position = spawnLocation;
     }
 
     public PlayerArrowHitResult handleArrowHit()
@@ -43,10 +58,6 @@ public class Player : MonoBehaviour
         }
 
         playerstate.changeState(PlayerPossibleState.DEAD);
-
-        // Setting the player to dead player layer
-        gameObject.layer = 8;
-
         return PlayerArrowHitResult.HIT;
     }
 

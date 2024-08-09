@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
-[System.Serializable]
+[Serializable]
 public struct PlayerInputs
 {
     public InputActionReference jumpAction;
@@ -12,11 +13,24 @@ public struct PlayerInputs
     public InputActionReference shootAction;
 }
 
+struct PlayerEntry
+{
+    public Player player;
+    public int deathCount;
+
+    public PlayerEntry(Player _player)
+    {
+        player = _player;
+        deathCount = 0;
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public List<PlayerInputs> playerInputs;
-    private List<Player> players = new List<Player>();
+
+    private List<PlayerEntry> playerEntries = new List<PlayerEntry>();
 
     [SerializeField]
     private int currentPlayers = 1;
@@ -33,7 +47,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void initPlayer(Player player)
+    public void respawnPlayer(Player player)
+    {
+        if (player.deathCount >= 3)
+        {
+            Debug.Log("Game over");
+            return;
+        }
+
+        player.handleRespawn();
+    }
+
+    public int initPlayer(Player player)
     {
         if (playerInputs.Count <= currentPlayers)
         {
@@ -41,7 +66,11 @@ public class GameManager : MonoBehaviour
         }
 
         player.playerInputHandler.init(playerInputs[currentPlayers]);
-        players.Add(player);
+
+        playerEntries.Add(new PlayerEntry(player));
+
         currentPlayers++;
+
+        return currentPlayers;
     }
 }

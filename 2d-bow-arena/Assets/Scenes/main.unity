@@ -196,9 +196,11 @@ MonoBehaviour:
   playerInputHandler: {fileID: 6119953}
   playerObserver: {fileID: 6119960}
   playerMovementHandler: {fileID: 6119963}
+  playerId: 0
   isDashAvailable: 0
   arrowCount: 3
-  arrowForce: 0
+  deathCount: 0
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &6119955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a454d7c3dd13bf419d6e71291d5a921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathTimerSecond: 3
 --- !u!1 &67976513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,9 +1286,11 @@ MonoBehaviour:
   playerInputHandler: {fileID: 1292924941}
   playerObserver: {fileID: 1292924929}
   playerMovementHandler: {fileID: 1292924925}
+  playerId: 0
   isDashAvailable: 0
   arrowCount: 3
-  arrowForce: 0
+  deathCount: 0
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &1292924941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,6 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a454d7c3dd13bf419d6e71291d5a921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathTimerSecond: 3
 --- !u!1 &1621282042
 GameObject:
   m_ObjectHideFlags: 0
