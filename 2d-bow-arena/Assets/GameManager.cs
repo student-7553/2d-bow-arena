@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerEntry> playerEntries;
 
+    public Dictionary<int, int> playerDeathCounterMap = new Dictionary<int, int>();
+
     private void Awake()
     {
         if (instance != null)
@@ -45,19 +47,21 @@ public class GameManager : MonoBehaviour
         for (int index = 0; index < playerEntries.Count; index++)
         {
             initPlayerIndex(index);
+            playerDeathCounterMap.Add(index, 0);
         }
     }
 
     public void respawnPlayer(int playerIndex)
     {
-        //Todo handle the death counter here
-        // if (player.deathCount >= 3)
-        // {
-        //     Debug.Log("Game over");
-        //     return;
-        // }
+        if (playerDeathCounterMap[playerIndex] >= 3)
+        {
+            Debug.Log("Game over");
+            return;
+        }
 
         initPlayerIndex(playerIndex);
+
+        playerDeathCounterMap[playerIndex] = playerDeathCounterMap[playerIndex] + 1;
     }
 
     public void initPlayerIndex(int index)
