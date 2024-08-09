@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 [Serializable]
 public struct PlayerInputs
@@ -13,27 +12,20 @@ public struct PlayerInputs
     public InputActionReference shootAction;
 }
 
-struct PlayerEntry
+[Serializable]
+public struct PlayerEntry
 {
-    public Player player;
-    public int deathCount;
-
-    public PlayerEntry(Player _player)
-    {
-        player = _player;
-        deathCount = 0;
-    }
+    public PlayerInputs playerInputs;
+    public Vector3 spawnLocation;
 }
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public List<PlayerInputs> playerInputs;
 
-    private List<PlayerEntry> playerEntries = new List<PlayerEntry>();
+    public GameObject playerPrefab;
 
-    [SerializeField]
-    private int currentPlayers = 1;
+    public List<PlayerEntry> playerEntries;
 
     private void Awake()
     {
@@ -45,32 +37,43 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+        spawnPlayers();
     }
 
-    public void respawnPlayer(Player player)
+    private void spawnPlayers()
     {
-        if (player.deathCount >= 3)
+        for (int index = 0; index < playerEntries.Count; index++)
         {
-            Debug.Log("Game over");
-            return;
+            initPlayerIndex(index);
         }
-
-        player.handleRespawn();
     }
 
-    public int initPlayer(Player player)
+    public void respawnPlayer(int playerIndex)
     {
-        if (playerInputs.Count <= currentPlayers)
+        //Todo handle the death counter here
+        // if (player.deathCount >= 3)
+        // {
+        //     Debug.Log("Game over");
+        //     return;
+        // }
+
+        initPlayerIndex(playerIndex);
+    }
+
+    public void initPlayerIndex(int index)
+    {
+        if (playerEntries.Count <= index)
         {
             throw new Exception("Requesting player overflow");
         }
 
-        player.playerInputHandler.init(playerInputs[currentPlayers]);
+        GameObject playerGameObject = Instantiate(
+            playerPrefab,
+            playerEntries[index].spawnLocation,
+            Quaternion.identity
+        );
 
-        playerEntries.Add(new PlayerEntry(player));
-
-        currentPlayers++;
-
-        return currentPlayers;
+        Player player = playerGameObject.GetComponent<Player>();
+        player.init(index, playerEntries[index].playerInputs);
     }
 }

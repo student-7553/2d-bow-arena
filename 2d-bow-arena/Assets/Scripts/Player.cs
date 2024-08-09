@@ -17,33 +17,22 @@ public class Player : MonoBehaviour
     [NonSerialized]
     public Arrow stuckArrow;
 
-    public int playerId;
-
     public bool isDashAvailable;
     public int arrowCount;
     public int deathCount;
-    public Vector3 spawnLocation;
 
-    void Start()
+    [NonSerialized]
+    public int playerIndex;
+
+    public void init(int _playerIndex, PlayerInputs playerInputs)
     {
-        playerId = GameManager.instance.initPlayer(this);
-        spawnLocation = transform.position;
+        playerIndex = _playerIndex;
+        playerInputHandler.init(playerInputs);
     }
 
     private void FixedUpdate()
     {
         handleDashCooldown();
-    }
-
-    public void handleRespawn()
-    {
-        playerstate.changeState(PlayerPossibleState.NONE);
-        if (stuckArrow != null)
-        {
-            Destroy(stuckArrow.gameObject);
-        }
-
-        gameObject.transform.position = spawnLocation;
     }
 
     public PlayerArrowHitResult handleArrowHit()

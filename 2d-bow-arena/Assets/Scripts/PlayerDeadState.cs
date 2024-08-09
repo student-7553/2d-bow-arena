@@ -13,8 +13,9 @@ public class PlayerDeadState : MonoBehaviour
 
     public void stateEnd()
     {
-        player.playerMovementHandler.handleUnDisableMovement();
-        gameObject.layer = 6;
+        Debug.LogError("PlayerDeadState should never change");
+        // player.playerMovementHandler.handleUnDisableMovement();
+        // gameObject.layer = 6;
     }
 
     public void stateStart()
@@ -31,6 +32,6 @@ public class PlayerDeadState : MonoBehaviour
     private IEnumerator deathTimer()
     {
         yield return new WaitForSeconds(deathTimerSecond);
-        GameManager.instance.respawnPlayer(player);
+        GameManager.instance.respawnPlayer(player.playerIndex);
     }
 }

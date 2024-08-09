@@ -9,8 +9,6 @@ public class PlayerDashState : MonoBehaviour
     private Vector2 currentDirection;
     private float cachedGravityScale;
 
-    public Vector2 cachedVelocity;
-
     private int currentTickCount;
 
     public int totalTickCountForDash;

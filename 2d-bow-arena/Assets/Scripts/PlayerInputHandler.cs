@@ -20,7 +20,6 @@ public class PlayerInputHandler : MonoBehaviour
         dashAction.action.performed += OnDashAction;
         movement2dAction.action.performed += OnMovementActionPerformed;
         movement2dAction.action.canceled += OnMovementActionCanceled;
-
         shootAction.action.performed += OnShootActionPerformed;
         shootAction.action.canceled += OnShootActionCanceled;
     }
