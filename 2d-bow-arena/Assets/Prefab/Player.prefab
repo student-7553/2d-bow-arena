@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 5731108691703855862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.09, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxYVelocity: 30
-  minYVelocity: -10
+  minYVelocity: -20
 --- !u!114 &3952158383173937727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,10 +127,10 @@ MonoBehaviour:
   playerRigidbody: {fileID: 0}
   direction: {x: 0, y: 0}
   lookingDirection: 0
-  velocityLimit: 4
+  velocityLimit: 5
   flowXDetail:
     xMaxFlowCounter: 7
-    xTickDirectionMultiple: 1
+    xTickDirectionMultiple: 2
 --- !u!114 &5958474824248393187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxJumpingFixedCounter: 15
-  singleTickThrust: 50
-  jumpInitialVelocity: {x: 2, y: 6}
+  singleTickThrust: 80
+  jumpInitialVelocity: {x: 2, y: 7}
 --- !u!61 &8601644601479563575
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -183,13 +183,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.5, y: 0.5}
-    newSize: {x: 0.5, y: 0.5}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &6896897334828260453
 MonoBehaviour:
@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b338254d0348a4ab5afb196c7b47bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTickCountForDash: 12
-  positonAddPerTick: 0.3
+  totalTickCountForDash: 9
+  positonAddPerTick: 0.35
 --- !u!114 &7273515634611658167
 MonoBehaviour:
   m_ObjectHideFlags: 0
