@@ -60,10 +60,7 @@ public class PlayerState : MonoBehaviour
                 changeState(PlayerPossibleState.SLIDE_JUMPING);
                 break;
             case PlayerPossibleState.FALLING:
-                if (
-                    player.playerObserver.observedState != ObservedState.NEAR_LEFT_WALL
-                    && player.playerObserver.observedState != ObservedState.NEAR_RIGHT_WALL
-                )
+                if (player.playerObserver.observedWallState == ObservedWallState.NONE)
                 {
                     return;
                 }
@@ -178,7 +175,7 @@ public class PlayerState : MonoBehaviour
             case PlayerPossibleState.SLIDE_JUMPING:
                 player.playerMovementHandler.handleDisableMovement();
                 playerSlideJumpState.stateStart(
-                    player.playerObserver.observedState == ObservedState.NEAR_RIGHT_WALL
+                    player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
                         ? true
                         : false
                 );

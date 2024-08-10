@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7e8e5f4e59294c88a6a5222371ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxYSlidingVelocity: 1.5
+  maxYSlidingVelocity: 3
 --- !u!114 &2096642428270604667
 MonoBehaviour:
   m_ObjectHideFlags: 0

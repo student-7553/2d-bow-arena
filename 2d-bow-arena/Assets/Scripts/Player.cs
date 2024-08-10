@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     public void handleDashCooldown()
     {
-        if (playerObserver.observedState != ObservedState.GROUND)
+        if (!playerObserver.isOnGround)
         {
             return;
         }

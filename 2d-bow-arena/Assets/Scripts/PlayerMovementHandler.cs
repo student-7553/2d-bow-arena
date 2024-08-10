@@ -23,6 +23,7 @@ public enum LookingDirection
 public class PlayerMovementHandler : MonoBehaviour
 {
     public Rigidbody2D playerRigidbody;
+    private Player player;
     private BoxCollider2D playerCollider;
 
     public Vector2 direction;
@@ -39,6 +40,11 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
+        player = GetComponent<Player>();
+        if (player == null)
+        {
+            throw new Exception("Player is missing in PlayerMovementHandler");
+        }
     }
 
     private void FixedUpdate()
@@ -70,6 +76,17 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private Vector2 xTickDirection()
     {
+        if (
+            player.playerstate.currentState == PlayerPossibleState.JUMPING
+            && (
+                player.playerObserver.observedWallState == ObservedWallState.NEAR_LEFT_WALL
+                || player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
+            )
+        )
+        {
+            return Vector2.zero;
+        }
+
         float xDirection = direction.x > 0 ? 1 : -1;
 
         Vector2 targetPosition = new Vector2(xDirection * flowXDetail.xTickDirectionMultiple, 0);
@@ -103,11 +120,13 @@ public class PlayerMovementHandler : MonoBehaviour
     public void handleDisableMovement()
     {
         isDisabled = true;
+        Debug.Log(isDisabled);
     }
 
     public void handleUnDisableMovement()
     {
         isDisabled = false;
+        Debug.Log(isDisabled);
     }
 
     // public void handleChangeToTrigger()

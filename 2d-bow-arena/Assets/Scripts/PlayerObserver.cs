@@ -1,11 +1,18 @@
 using UnityEngine;
 
-public enum ObservedState
+// public enum ObservedState
+// {
+//     NEAR_LEFT_WALL,
+//     NEAR_RIGHT_WALL,
+//     GROUND,
+//     AIR
+// }
+
+public enum ObservedWallState
 {
     NEAR_LEFT_WALL,
     NEAR_RIGHT_WALL,
-    GROUND,
-    AIR
+    NONE
 }
 
 public class PlayerObserver : MonoBehaviour
@@ -17,7 +24,10 @@ public class PlayerObserver : MonoBehaviour
 
     private Player player;
 
-    public ObservedState observedState;
+    public bool isOnGround;
+    public ObservedWallState observedWallState = ObservedWallState.NONE;
+
+    // public ObservedState observedState;
 
     public LayerMask layerMask;
 
@@ -32,7 +42,7 @@ public class PlayerObserver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        observedState = getObservedState();
+        computeObservedState();
         // handleDashCooldown();
         handleSelfStates();
     }
@@ -52,13 +62,13 @@ public class PlayerObserver : MonoBehaviour
             return;
         }
 
-        if (observedState == ObservedState.GROUND)
+        if (isOnGround)
         {
             player.playerstate.changeState(PlayerPossibleState.GROUND);
             return;
         }
         if (
-            observedState == ObservedState.NEAR_LEFT_WALL
+            observedWallState == ObservedWallState.NEAR_LEFT_WALL
             && player.playerMovementHandler.direction.x < 0
         )
         {
@@ -66,7 +76,7 @@ public class PlayerObserver : MonoBehaviour
             return;
         }
         if (
-            observedState == ObservedState.NEAR_RIGHT_WALL
+            observedWallState == ObservedWallState.NEAR_RIGHT_WALL
             && player.playerMovementHandler.direction.x > 0
         )
         {
@@ -76,25 +86,22 @@ public class PlayerObserver : MonoBehaviour
         player.playerstate.changeState(PlayerPossibleState.FALLING);
     }
 
-    private ObservedState getObservedState()
+    private void computeObservedState()
     {
-        bool isOnGround = computeIsOnGround();
-        if (isOnGround)
-        {
-            return ObservedState.GROUND;
-        }
-        bool isSlidingLeft = computeIsSlidingLeft();
-        if (isSlidingLeft)
-        {
-            return ObservedState.NEAR_LEFT_WALL;
-        }
-        bool isSlidingRight = computeIsSlidingRight();
-        if (isSlidingRight)
-        {
-            return ObservedState.NEAR_RIGHT_WALL;
-        }
+        isOnGround = computeIsOnGround();
 
-        return ObservedState.AIR;
+        if (computeIsSlidingLeft())
+        {
+            observedWallState = ObservedWallState.NEAR_LEFT_WALL;
+        }
+        else if (computeIsSlidingRight())
+        {
+            observedWallState = ObservedWallState.NEAR_RIGHT_WALL;
+        }
+        else
+        {
+            observedWallState = ObservedWallState.NONE;
+        }
     }
 
     private bool computeIsOnGround()
@@ -129,6 +136,8 @@ public class PlayerObserver : MonoBehaviour
             0.15f,
             layerMask
         );
+
+        // Debug.DrawRay(originPosition, Vector2.right * 0.15f, Color.red);
 
         return !!rayCastResult.collider;
     }

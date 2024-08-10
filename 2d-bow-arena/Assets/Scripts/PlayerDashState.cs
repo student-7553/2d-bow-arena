@@ -24,38 +24,42 @@ public class PlayerDashState : MonoBehaviour
     {
         Vector2 effectiveDirection = currentDirection;
 
-        switch (playerState.player.playerObserver.observedState)
+        if (playerState.player.playerObserver.isOnGround)
         {
-            case ObservedState.NEAR_LEFT_WALL:
-            case ObservedState.NEAR_RIGHT_WALL:
+            if (effectiveDirection.x != 0 && effectiveDirection.y < 0)
+            {
+                if (effectiveDirection.x > 0)
+                {
+                    // upward
+                    effectiveDirection = new Vector2(1, 0);
+                }
+                else
+                {
+                    effectiveDirection = new Vector2(-1, 0);
+                }
+            }
+        }
+        else
+        {
+            switch (playerState.player.playerObserver.observedWallState)
+            {
+                case ObservedWallState.NEAR_LEFT_WALL:
+                case ObservedWallState.NEAR_RIGHT_WALL:
 
-                if (effectiveDirection.x != 0 && effectiveDirection.y != 0)
-                {
-                    if (effectiveDirection.y > 0)
+                    if (effectiveDirection.x != 0 && effectiveDirection.y != 0)
                     {
-                        // upward
-                        effectiveDirection = new Vector2(0, 1);
+                        if (effectiveDirection.y > 0)
+                        {
+                            // upward
+                            effectiveDirection = new Vector2(0, 1);
+                        }
+                        else
+                        {
+                            effectiveDirection = new Vector2(0, -1);
+                        }
                     }
-                    else
-                    {
-                        effectiveDirection = new Vector2(0, -1);
-                    }
-                }
-                break;
-            case ObservedState.GROUND:
-                if (effectiveDirection.x != 0 && effectiveDirection.y < 0)
-                {
-                    if (effectiveDirection.x > 0)
-                    {
-                        // upward
-                        effectiveDirection = new Vector2(1, 0);
-                    }
-                    else
-                    {
-                        effectiveDirection = new Vector2(-1, 0);
-                    }
-                }
-                break;
+                    break;
+            }
         }
 
         Vector2 directionVector = Vector2.zero;
