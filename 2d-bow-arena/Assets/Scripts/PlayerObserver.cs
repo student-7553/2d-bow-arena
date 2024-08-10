@@ -1,13 +1,5 @@
 using UnityEngine;
 
-// public enum ObservedState
-// {
-//     NEAR_LEFT_WALL,
-//     NEAR_RIGHT_WALL,
-//     GROUND,
-//     AIR
-// }
-
 public enum ObservedWallState
 {
     NEAR_LEFT_WALL,
@@ -27,8 +19,6 @@ public class PlayerObserver : MonoBehaviour
     public bool isOnGround;
     public ObservedWallState observedWallState = ObservedWallState.NONE;
 
-    // public ObservedState observedState;
-
     public LayerMask layerMask;
 
     void Start()
@@ -43,7 +33,6 @@ public class PlayerObserver : MonoBehaviour
     private void FixedUpdate()
     {
         computeObservedState();
-        // handleDashCooldown();
         handleSelfStates();
     }
 

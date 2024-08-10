@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -76,18 +77,37 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private Vector2 xTickDirection()
     {
-        if (
-            player.playerstate.currentState == PlayerPossibleState.JUMPING
-            && (
-                player.playerObserver.observedWallState == ObservedWallState.NEAR_LEFT_WALL
-                || player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
-            )
-        )
-        {
-            return Vector2.zero;
-        }
-
         float xDirection = direction.x > 0 ? 1 : -1;
+
+        switch (player.playerstate.currentState)
+        {
+            case PlayerPossibleState.JUMPING:
+                if (
+                    player.playerObserver.observedWallState == ObservedWallState.NEAR_LEFT_WALL
+                    || player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
+                )
+                {
+                    return Vector2.zero;
+                }
+                break;
+            case PlayerPossibleState.SLIDING:
+                if (
+                    player.playerObserver.observedWallState == ObservedWallState.NEAR_LEFT_WALL
+                    && xDirection < 0
+                )
+                {
+                    return Vector2.zero;
+                }
+                else if (
+                    player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
+                    && xDirection > 0
+                )
+                {
+                    return Vector2.zero;
+                }
+
+                break;
+        }
 
         Vector2 targetPosition = new Vector2(xDirection * flowXDetail.xTickDirectionMultiple, 0);
 
@@ -120,18 +140,10 @@ public class PlayerMovementHandler : MonoBehaviour
     public void handleDisableMovement()
     {
         isDisabled = true;
-        Debug.Log(isDisabled);
     }
 
     public void handleUnDisableMovement()
     {
         isDisabled = false;
-        Debug.Log(isDisabled);
     }
-
-    // public void handleChangeToTrigger()
-    // {
-    //     // playerRigidbody.bodyType = RigidbodyType2D.Kinematic;
-    //     // playerCollider.isTrigger = true;
-    // }
 }

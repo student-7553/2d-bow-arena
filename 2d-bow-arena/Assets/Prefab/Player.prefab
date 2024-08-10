@@ -203,7 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2c4fce5ef8be049801155015231a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  observedState: 0
+  isOnGround: 0
+  observedWallState: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -274,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7e8e5f4e59294c88a6a5222371ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxYSlidingVelocity: 3
+  maxYSlidingVelocity: 2
 --- !u!114 &2096642428270604667
 MonoBehaviour:
   m_ObjectHideFlags: 0
