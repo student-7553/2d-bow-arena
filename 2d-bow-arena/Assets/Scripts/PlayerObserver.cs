@@ -24,8 +24,8 @@ public class PlayerObserver : MonoBehaviour
     void Start()
     {
         playerCollider = GetComponent<BoxCollider2D>();
-        yMargin = (playerCollider.size.y / 2f) - 0.1f;
-        xMargin = (playerCollider.size.x / 2f) - 0.1f;
+        yMargin = (playerCollider.size.y / 2f) - 0.05f;
+        xMargin = (playerCollider.size.x / 2f) - 0.05f;
 
         player = GetComponent<Player>();
     }
@@ -95,56 +95,96 @@ public class PlayerObserver : MonoBehaviour
 
     private bool computeIsOnGround()
     {
-        Vector2 originPosition = new Vector2(
-            gameObject.transform.position.x,
+        Vector2 originLeftPosition = new Vector2(
+            gameObject.transform.position.x - xMargin,
+            gameObject.transform.position.y - yMargin
+        );
+        Vector2 originRightPosition = new Vector2(
+            gameObject.transform.position.x + xMargin,
             gameObject.transform.position.y - yMargin
         );
 
-        RaycastHit2D rayCastResult = Physics2D.Raycast(
-            originPosition,
+        RaycastHit2D rayCastLeftResult = Physics2D.Raycast(
+            originLeftPosition,
             Vector2.down,
-            0.15f,
+            0.1f,
             layerMask
         );
 
-        // Debug.DrawRay(originPosition, Vector2.down * 0.25f, Color.red);
+        RaycastHit2D rayCastRightResult = Physics2D.Raycast(
+            originRightPosition,
+            Vector2.down,
+            0.1f,
+            layerMask
+        );
 
-        return !!rayCastResult.collider;
+        // Debug.DrawRay(originLeftPosition, Vector2.down * 0.1f, Color.red);
+        // Debug.DrawRay(originRightPosition, Vector2.down * 0.1f, Color.red);
+
+        return !!rayCastRightResult.collider || !!rayCastLeftResult.collider;
     }
 
     private bool computeIsSlidingRight()
     {
-        Vector2 originPosition = new Vector2(
+        Vector2 originBottomPosition = new Vector2(
             gameObject.transform.position.x + xMargin,
-            gameObject.transform.position.y
+            gameObject.transform.position.y - yMargin
         );
 
-        RaycastHit2D rayCastResult = Physics2D.Raycast(
-            originPosition,
+        Vector2 originTopPosition = new Vector2(
+            gameObject.transform.position.x + xMargin,
+            gameObject.transform.position.y + yMargin
+        );
+
+        RaycastHit2D rayCastBottomResult = Physics2D.Raycast(
+            originBottomPosition,
             Vector2.right,
-            0.15f,
+            0.1f,
             layerMask
         );
 
-        // Debug.DrawRay(originPosition, Vector2.right * 0.15f, Color.red);
+        RaycastHit2D rayCastTopResult = Physics2D.Raycast(
+            originTopPosition,
+            Vector2.right,
+            0.1f,
+            layerMask
+        );
 
-        return !!rayCastResult.collider;
+        // Debug.DrawRay(originBottomPosition, Vector2.right * 0.1f, Color.red);
+        // Debug.DrawRay(originTopPosition, Vector2.right * 0.1f, Color.red);
+
+        return !!rayCastBottomResult.collider || !!rayCastTopResult.collider;
     }
 
     private bool computeIsSlidingLeft()
     {
-        Vector2 originPosition = new Vector2(
+        Vector2 originBottomPosition = new Vector2(
             gameObject.transform.position.x - xMargin,
-            gameObject.transform.position.y
+            gameObject.transform.position.y - yMargin
         );
 
-        RaycastHit2D rayCastResult = Physics2D.Raycast(
-            originPosition,
+        Vector2 originTopPosition = new Vector2(
+            gameObject.transform.position.x - xMargin,
+            gameObject.transform.position.y + yMargin
+        );
+
+        RaycastHit2D rayCastBottomResult = Physics2D.Raycast(
+            originBottomPosition,
             Vector2.left,
-            0.15f,
+            0.1f,
             layerMask
         );
 
-        return !!rayCastResult.collider;
+        RaycastHit2D rayCastTopResult = Physics2D.Raycast(
+            originTopPosition,
+            Vector2.left,
+            0.1f,
+            layerMask
+        );
+
+        // Debug.DrawRay(originBottomPosition, Vector2.left * 0.1f, Color.red);
+        // Debug.DrawRay(originTopPosition, Vector2.left * 0.1f, Color.red);
+
+        return !!rayCastBottomResult.collider || !!rayCastTopResult.collider;
     }
 }

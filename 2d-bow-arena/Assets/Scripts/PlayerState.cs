@@ -204,7 +204,6 @@ public class PlayerState : MonoBehaviour
             && playerInputHistoryEntry.entryDateTime.AddMilliseconds(kayoteMilisec) > DateTime.Now
         )
         {
-            Debug.Log("We are jumping now");
             changeState(PlayerPossibleState.JUMPING);
             return true;
         }

@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9421fbb7fc81a1b40aefd1edc6589b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHolding: 0
   maxJumpingFixedCounter: 15
   singleTickThrust: 80
   jumpInitialVelocity: {x: 2, y: 7}
