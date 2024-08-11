@@ -204,9 +204,12 @@ public class PlayerState : MonoBehaviour
             && playerInputHistoryEntry.entryDateTime.AddMilliseconds(kayoteMilisec) > DateTime.Now
         )
         {
+            // koyote time
             changeState(PlayerPossibleState.JUMPING);
             return true;
         }
+
+        Debug.Log(newState);
 
         switch (currentState)
         {

@@ -60,22 +60,20 @@ public class PlayerMovementHandler : MonoBehaviour
             return;
         }
 
-        Vector2 xTickDir = xTickDirection();
+        Vector2 xTickDir = xTickDirection(playerRigidbody.velocity);
 
-        Vector2 newVelocity = playerRigidbody.velocity + xTickDir;
-
-        newVelocity.x = Mathf.Clamp(
-            newVelocity.x,
+        xTickDir.x = Mathf.Clamp(
+            xTickDir.x,
             Math.Min(-velocityLimit, playerRigidbody.velocity.x),
             Math.Max(velocityLimit, playerRigidbody.velocity.x)
         );
 
-        playerRigidbody.velocity = newVelocity;
+        playerRigidbody.velocity = xTickDir;
 
         flowXDetail.xFlowCounter = flowXDetail.xFlowCounter + 1;
     }
 
-    private Vector2 xTickDirection()
+    private Vector2 xTickDirection(Vector2 playerVelocity)
     {
         float xDirection = direction.x > 0 ? 1 : -1;
 
@@ -87,7 +85,7 @@ public class PlayerMovementHandler : MonoBehaviour
                     || player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
                 )
                 {
-                    return Vector2.zero;
+                    return new Vector2(0, playerVelocity.y);
                 }
                 break;
             case PlayerPossibleState.SLIDING:
@@ -96,14 +94,14 @@ public class PlayerMovementHandler : MonoBehaviour
                     && xDirection < 0
                 )
                 {
-                    return Vector2.zero;
+                    return playerVelocity;
                 }
                 else if (
                     player.playerObserver.observedWallState == ObservedWallState.NEAR_RIGHT_WALL
                     && xDirection > 0
                 )
                 {
-                    return Vector2.zero;
+                    return playerVelocity;
                 }
 
                 break;
@@ -111,7 +109,14 @@ public class PlayerMovementHandler : MonoBehaviour
 
         Vector2 targetPosition = new Vector2(xDirection * flowXDetail.xTickDirectionMultiple, 0);
 
-        return targetPosition;
+        bool playerRight = playerVelocity.x > 0;
+        bool targetRight = targetPosition.x > 0;
+        if (playerRight != targetRight)
+        {
+            playerVelocity.x = 0f;
+        }
+
+        return targetPosition + playerVelocity;
     }
 
     public void handlePlayerDirectionInput(Vector2 directionInput)

@@ -107,19 +107,19 @@ public class PlayerObserver : MonoBehaviour
         RaycastHit2D rayCastLeftResult = Physics2D.Raycast(
             originLeftPosition,
             Vector2.down,
-            0.1f,
+            0.2f,
             layerMask
         );
 
         RaycastHit2D rayCastRightResult = Physics2D.Raycast(
             originRightPosition,
             Vector2.down,
-            0.1f,
+            0.2f,
             layerMask
         );
 
-        // Debug.DrawRay(originLeftPosition, Vector2.down * 0.1f, Color.red);
-        // Debug.DrawRay(originRightPosition, Vector2.down * 0.1f, Color.red);
+        // Debug.DrawRay(originLeftPosition, Vector2.down * 0.2f, Color.red);
+        // Debug.DrawRay(originRightPosition, Vector2.down * 0.2f, Color.red);
 
         return !!rayCastRightResult.collider || !!rayCastLeftResult.collider;
     }
@@ -139,19 +139,19 @@ public class PlayerObserver : MonoBehaviour
         RaycastHit2D rayCastBottomResult = Physics2D.Raycast(
             originBottomPosition,
             Vector2.right,
-            0.1f,
+            0.2f,
             layerMask
         );
 
         RaycastHit2D rayCastTopResult = Physics2D.Raycast(
             originTopPosition,
             Vector2.right,
-            0.1f,
+            0.2f,
             layerMask
         );
 
-        // Debug.DrawRay(originBottomPosition, Vector2.right * 0.1f, Color.red);
-        // Debug.DrawRay(originTopPosition, Vector2.right * 0.1f, Color.red);
+        // Debug.DrawRay(originBottomPosition, Vector2.right * 0.2f, Color.red);
+        // Debug.DrawRay(originTopPosition, Vector2.right * 0.2f, Color.red);
 
         return !!rayCastBottomResult.collider || !!rayCastTopResult.collider;
     }
@@ -171,19 +171,19 @@ public class PlayerObserver : MonoBehaviour
         RaycastHit2D rayCastBottomResult = Physics2D.Raycast(
             originBottomPosition,
             Vector2.left,
-            0.1f,
+            0.2f,
             layerMask
         );
 
         RaycastHit2D rayCastTopResult = Physics2D.Raycast(
             originTopPosition,
             Vector2.left,
-            0.1f,
+            0.2f,
             layerMask
         );
 
-        // Debug.DrawRay(originBottomPosition, Vector2.left * 0.1f, Color.red);
-        // Debug.DrawRay(originTopPosition, Vector2.left * 0.1f, Color.red);
+        // Debug.DrawRay(originBottomPosition, Vector2.left * 0.2f, Color.red);
+        // Debug.DrawRay(originTopPosition, Vector2.left * 0.2f, Color.red);
 
         return !!rayCastBottomResult.collider || !!rayCastTopResult.collider;
     }
