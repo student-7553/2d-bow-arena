@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using System.Linq;
 using System;
+using System.Collections.Generic;
 
 public enum PlayerPossibleState
 {
@@ -14,6 +14,30 @@ public enum PlayerPossibleState
     SLIDING,
     SLIDE_JUMPING,
     DEAD,
+}
+
+public struct PlayerInputHistoryEntry
+{
+    public PlayerInput input;
+    public DateTime entryDateTime;
+
+    public PlayerInputHistoryEntry(PlayerInput _playerInput, DateTime _entryDateTime)
+    {
+        input = _playerInput;
+        entryDateTime = _entryDateTime;
+    }
+}
+
+public struct PlayerStateHistoryEntry
+{
+    public PlayerPossibleState state;
+    public DateTime entryDateTime;
+
+    public PlayerStateHistoryEntry(PlayerPossibleState _playerState, DateTime _entryDateTime)
+    {
+        state = _playerState;
+        entryDateTime = _entryDateTime;
+    }
 }
 
 public class PlayerState : MonoBehaviour
@@ -31,6 +55,22 @@ public class PlayerState : MonoBehaviour
     private PlayerSlideJumpState playerSlideJumpState;
     private PlayerAimState playerAimState;
     private PlayerDeadState playerDeadState;
+
+    public float kayoteMilisec;
+
+    // todo move this to player inputs
+    private PlayerInputHistoryEntry playerInputHistoryEntry = new PlayerInputHistoryEntry(
+        PlayerInput.JUMP,
+        DateTime.MinValue
+    );
+
+    private List<PlayerStateHistoryEntry> playerStateHistoryEntries =
+        new List<PlayerStateHistoryEntry>();
+
+    // new PlayerStateHistoryEntry(
+    //     PlayerPossibleState.NONE,
+    //     DateTime.MinValue
+    // );
 
     // -------------------------------------------------
 
@@ -51,6 +91,22 @@ public class PlayerState : MonoBehaviour
 
     public void handleJumpAction()
     {
+        playerJumpHandler.isHolding = true;
+        playerInputHistoryEntry = new PlayerInputHistoryEntry(PlayerInput.JUMP, DateTime.Now);
+
+        if (
+            playerStateHistoryEntries.Count != 0
+            && playerStateHistoryEntries[playerStateHistoryEntries.Count - 2].state
+                == PlayerPossibleState.GROUND
+            && playerStateHistoryEntries[
+                playerStateHistoryEntries.Count - 1
+            ].entryDateTime.AddMilliseconds(kayoteMilisec) > DateTime.Now
+        )
+        {
+            changeState(PlayerPossibleState.JUMPING);
+            return;
+        }
+
         switch (currentState)
         {
             case PlayerPossibleState.GROUND:
@@ -95,7 +151,6 @@ public class PlayerState : MonoBehaviour
         playerAimState.handleShoot();
 
         changeState(PlayerPossibleState.NONE);
-        // if not state do nothing
     }
 
     public void handleDashAction()
@@ -115,12 +170,14 @@ public class PlayerState : MonoBehaviour
 
     public void handleJumpActionEnd()
     {
+        playerJumpHandler.isHolding = false;
+
         if (currentState != PlayerPossibleState.JUMPING)
         {
             return;
         }
 
-        playerJumpHandler.handleJumpEnd();
+        changeState(PlayerPossibleState.NONE);
     }
 
     private bool isAllowedToChangeStateTo(PlayerPossibleState newState)
@@ -140,6 +197,16 @@ public class PlayerState : MonoBehaviour
         if (!isAllowed)
         {
             return false;
+        }
+
+        if (
+            newState == PlayerPossibleState.GROUND
+            && playerInputHistoryEntry.entryDateTime.AddMilliseconds(kayoteMilisec) > DateTime.Now
+        )
+        {
+            Debug.Log("We are jumping now");
+            changeState(PlayerPossibleState.JUMPING);
+            return true;
         }
 
         switch (currentState)
@@ -208,13 +275,9 @@ public class PlayerState : MonoBehaviour
         }
 
         currentState = newState;
+        playerStateHistoryEntries.Add(new PlayerStateHistoryEntry(currentState, DateTime.Now));
 
-        PlayerPossibleState[] cooldownStates = new PlayerPossibleState[]
-        {
-            PlayerPossibleState.JUMPING
-        };
-
-        if (cooldownStates.Contains(newState))
+        if (newState == PlayerPossibleState.JUMPING)
         {
             StartCoroutine(handleIsStateChangeOnCooldown());
         }

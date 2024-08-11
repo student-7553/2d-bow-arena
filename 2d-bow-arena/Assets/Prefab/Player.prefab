@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  kayoteMilisec: 150
   isStateChangeOnCooldown: 0
 --- !u!50 &394145616642807911
 Rigidbody2D:

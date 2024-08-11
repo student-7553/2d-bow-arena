@@ -15,6 +15,7 @@ public class PlayerJumpState : MonoBehaviour
     private PlayerState playerState;
 
     private bool isStateActive;
+    public bool isHolding;
 
     private int tickCounter = 0;
     public int maxJumpingFixedCounter;
@@ -59,9 +60,9 @@ public class PlayerJumpState : MonoBehaviour
 
         tickCounter = tickCounter + 1;
 
-        if (tickCounter >= maxJumpingFixedCounter)
+        if (tickCounter >= maxJumpingFixedCounter || !isHolding)
         {
-            handleJumpEnd();
+            playerState.changeState(PlayerPossibleState.NONE);
         }
     }
 
@@ -84,16 +85,15 @@ public class PlayerJumpState : MonoBehaviour
     public void stateEnd()
     {
         isStateActive = false;
-    }
-
-    public void handleJumpEnd()
-    {
-        playerState.changeState(PlayerPossibleState.NONE);
+        // isHolding = false;
     }
 
     public void stateStart(Vector2 _direction)
     {
         isStateActive = true;
+
+        // isHolding = true;
+
         tickCounter = 0;
 
         if (_direction.x == 0)

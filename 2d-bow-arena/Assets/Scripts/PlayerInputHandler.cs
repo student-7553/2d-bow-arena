@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerInput
+{
+    JUMP
+}
+
 public class PlayerInputHandler : MonoBehaviour
 {
     private InputActionReference jumpAction;
